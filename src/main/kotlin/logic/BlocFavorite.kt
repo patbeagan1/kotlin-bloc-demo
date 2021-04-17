@@ -4,7 +4,7 @@ import bloc.Bloc
 import dataaccess.FavoritesRepository
 import io.reactivex.rxjava3.core.Observable
 
-class Favorite(private val r: FavoritesRepository) : Bloc<Favorite.ActionFavorites, Favorite.StateFavorites>() {
+class BlocFavorite(private val r: FavoritesRepository) : Bloc<BlocFavorite.ActionFavorites, BlocFavorite.StateFavorites>() {
     sealed class ActionFavorites {
         class ActionFavorite(val id: Int) : ActionFavorites()
         class ActionUnFavorite(val id: Int) : ActionFavorites()

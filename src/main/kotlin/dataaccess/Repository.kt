@@ -1,7 +1,7 @@
 package dataaccess
 
 import io.reactivex.rxjava3.core.Observable
-import logic.Favorite
+import logic.BlocFavorite
 import util.observable
 import kotlin.random.Random
 
@@ -20,22 +20,22 @@ interface BananaRepository {
 }
 
 class FavoritesRepositoryImpl : FavoritesRepository {
-    override fun favorite(id: Int): Observable<Favorite.StateFavorites> =
-        Favorite.StateFavorites.StateFavoritesSuccess(id).observable()
+    override fun favorite(id: Int): Observable<BlocFavorite.StateFavorites> =
+        BlocFavorite.StateFavorites.StateFavoritesSuccess(id).observable()
 
-    override fun unfavorite(id: Int): Observable<Favorite.StateFavorites> {
+    override fun unfavorite(id: Int): Observable<BlocFavorite.StateFavorites> {
         // simulating a bad connection
         val nextInt = Random.nextInt()
         return if (nextInt % 2 == 0) {
             println(nextInt)
-            Favorite.StateFavorites.StateFavoritesError("issue").observable()
+            BlocFavorite.StateFavorites.StateFavoritesError("issue").observable()
         } else {
-            Favorite.StateFavorites.StateFavoritesSuccess(id).observable()
+            BlocFavorite.StateFavorites.StateFavoritesSuccess(id).observable()
         }
     }
 }
 
 interface FavoritesRepository {
-    fun favorite(id: Int): Observable<Favorite.StateFavorites>
-    fun unfavorite(id: Int): Observable<Favorite.StateFavorites>
+    fun favorite(id: Int): Observable<BlocFavorite.StateFavorites>
+    fun unfavorite(id: Int): Observable<BlocFavorite.StateFavorites>
 }
