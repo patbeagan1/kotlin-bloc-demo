@@ -1,15 +1,15 @@
 package bloc
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import util.EitherResult
 import util.Failure
 import util.Success
 import util.observable
-
-typealias BlocBinding<S> = List<Observable<out EitherResult<S, Bloc.BlocError>>>
 
 abstract class Bloc<A, S : Bloc.BlocState> {
     private val _out: PublishSubject<EitherResult<S, BlocError>> = PublishSubject.create()
@@ -34,4 +34,14 @@ abstract class Bloc<A, S : Bloc.BlocState> {
     class BlocError(t: Throwable) : BlocState
 }
 
+fun collector(
+    vararg listOf: Bloc<*, *>,
+    scheduler: Scheduler = Schedulers.computation(),
+    onEvent: (t: EitherResult<*, Bloc.BlocError>) -> Unit,
+) {
+    Observable
+        .merge(listOf.map { it.out })
+        .observeOn(scheduler)
+        .subscribe(onEvent)
+}
 

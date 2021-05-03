@@ -12,9 +12,17 @@ repositories {
     mavenCentral()
 }
 
+val versionKtor = "1.5.3"
+
 dependencies {
     testImplementation(kotlin("test-junit"))
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.0")
+
+    implementation("io.ktor:ktor-client-java:$versionKtor")
+    implementation("io.ktor:ktor-client-core:$versionKtor")
+    implementation("io.ktor:ktor-server-core:$versionKtor")
+    implementation("io.ktor:ktor-server-netty:$versionKtor")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 tasks.test {

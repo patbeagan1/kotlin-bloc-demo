@@ -1,22 +1,32 @@
 package dataaccess
 
 import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import logic.BlocFavorite
 import util.observable
 import kotlin.random.Random
 
-interface FruitRepository : AppleRepository, BananaRepository
+interface FruitRepository : AppleRepository, BananaRepository {
+    fun getCucumberFlow(): Flow<String>
+}
+
 class FruitRepositoryImpl : FruitRepository {
+    override fun getCucumberFlow(): Flow<String> = flowOf("cucumber")
     override fun getApple(): Observable<String> = Observable.just("apple")
+    override fun getAppleFlow(): Flow<String> = flowOf("flow apple")
     override fun getBanana(): Observable<String> = Observable.just("banana")
+    override fun getBananaFlow(): Flow<String> = flowOf("flow banana")
 }
 
 interface AppleRepository {
     fun getApple(): Observable<String>
+    fun getAppleFlow(): Flow<String>
 }
 
 interface BananaRepository {
     fun getBanana(): Observable<String>
+    fun getBananaFlow(): Flow<String>
 }
 
 class FavoritesRepositoryImpl : FavoritesRepository {

@@ -1,3 +1,3 @@
 
-rootProject.name = "heartbeat"
+rootProject.name = "kotlin-bloc-demo"
 
